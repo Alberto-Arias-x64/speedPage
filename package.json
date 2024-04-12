@@ -1,0 +1,22 @@
+{
+  "name": "speedpage",
+  "version": "1.0.0",
+  "description": "Auto generate reports",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Alberto Arias",
+    "email": "alberto.arias.x64@gmail.com",
+    "url": "https://alberto-arias.com"
+  },
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "cron": "^3.1.7",
+    "dotenv": "^16.4.5",
+    "nodemailer": "^6.9.13"
+  }
+}
