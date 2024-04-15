@@ -20,15 +20,36 @@ const mailTransporter = nodemailer.createTransport({
   }
 })
 
-async function sendReport() {
-  try {
-    const rawResponse = await fetch(`https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${process.env.SITE}&category=accessibility&category=best-practices&category=performance&category=seo&strategy=mobile`)
-    const response = await rawResponse.json()
+async function fetchResults() {
+  const rawResponse = await fetch(`https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${process.env.SITE}&category=accessibility&category=best-practices&category=performance&category=seo&strategy=mobile`)
+  const response = await rawResponse.json()
 
-    const performance = Math.floor(Number(response.lighthouseResult.categories.performance.score) * 100)
-    const accessibility = Math.floor((response.lighthouseResult.categories.accessibility.score) * 100)
-    const practices = Math.floor((response.lighthouseResult.categories['best-practices'].score) * 100)
-    const seo = Math.floor((response.lighthouseResult.categories.seo.score) * 100)
+  const performance = Math.floor(Number(response.lighthouseResult.categories.performance.score) * 100)
+  const accessibility = Math.floor((response.lighthouseResult.categories.accessibility.score) * 100)
+  const practices = Math.floor((response.lighthouseResult.categories['best-practices'].score) * 100)
+  const seo = Math.floor((response.lighthouseResult.categories.seo.score) * 100)
+
+  await new Promise(resolve => setTimeout(resolve, 60000));
+
+  return {
+    performance,
+    accessibility,
+    practices,
+    seo
+  }
+}
+
+async function sendReport() {
+
+  try {
+    const data1 = await fetchResults()
+    const data2 = await fetchResults(data1)
+    const data3 = await fetchResults(data2)
+
+    const performance = Math.max(data1.performance, data2.performance, data3.performance)
+    const accessibility = Math.max(data1.accessibility, data2.accessibility, data3.accessibility)
+    const practices = Math.max(data1.practices, data2.practices, data3.practices)
+    const seo = Math.max(data1.seo, data2.seo, data3.seo)
 
     const performance_color = getColor(performance)
     const accessibility_color = getColor(accessibility)
@@ -49,7 +70,7 @@ async function sendReport() {
     }
 
     mailTransporter.sendMail(options)
-  } catch { console.error('Something is going wrong') }
+  } catch (e) { console.error(`Something is going wrong, ${e}`) }
 }
 
 //sendReport()
