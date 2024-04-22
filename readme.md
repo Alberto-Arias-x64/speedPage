@@ -35,6 +35,8 @@ npm start
 
 El script generará el informe y lo enviará por correo electrónico a la dirección especificada en el archivo .env.
 
+![Demo del correo](https://alberto-arias.com/public/mail2.png)
+
 ## Contribuir
 
 Si deseas contribuir a este proyecto, ¡eres bienvenido! Si encuentras algún problema o tienes alguna mejora, no dudes en abrir un issue o enviar una solicitud de extracción.
