@@ -47,10 +47,10 @@ async function sendReport() {
     const data3 = await fetchResults(data2)
     const data4 = await fetchResults(data3)
 
-    const performance = Math.max(data1.performance, data2.performance, data3.performance, data4.performance)
-    const accessibility = Math.max(data1.accessibility, data2.accessibility, data3.accessibility, data4.accessibility)
-    const practices = Math.max(data1.practices, data2.practices, data3.practices, data4.practices)
-    const seo = Math.max(data1.seo, data2.seo, data3.seo, data4.seo)
+    const performance = Math.max(data1.performance, data4.performance)
+    const accessibility = Math.max(data1.accessibility, data4.accessibility)
+    const practices = Math.max(data1.practices, data4.practices)
+    const seo = Math.max(data1.seo, data4.seo)
 
     const performance_color = getColor(performance)
     const accessibility_color = getColor(accessibility)
