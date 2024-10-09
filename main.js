@@ -75,4 +75,5 @@ async function sendReport() {
 }
 
 //sendReport()
+//sendReport()
 new CronJob('0 8 * * 1-5', sendReport, null, true, 'America/Bogota')
